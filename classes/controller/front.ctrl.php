@@ -14,14 +14,15 @@ class Controller_Front extends Controller_Front_Application
             'q' => $keywords,
         ));
 
-        $pages = \Nos\Model_Page::find('all', array(
+        $pages = \Nos\Page\Model_Page::find('all', array(
             'where' => array(
                 array('keywords', $keywords),
             ),
-            'rows_limit' => 50,
+            'rows_limit' => 10,
+            'order_by' => array('jayps_search_score', 'page_title'),
         ));
         echo \View::forge('front/results', array(
-            'title'        => '\Nos\Model_Page::find()',
+            'title'        => '\Nos\Page\Model_Page::find()',
             'items'        => $pages,
             'field_name'   => 'page_title',
             'field_url'    => 'page_virtual_url',
@@ -32,7 +33,11 @@ class Controller_Front extends Controller_Front_Application
                 array('keywords', $keywords),
             ),
             'rows_limit' => 10,
-            'order_by' => array('monk_name' => 'asc')
+            /*'order_by' => array(
+                array('jayps_search_score'),
+                array('monk_name', 'asc')
+            ),*/
+            'order_by' => array('jayps_search_score', 'monk_name'),
         ));
         echo \View::forge('front/results', array(
             'title'        => '\Nos\Monkey\Model_Monkey::find()',

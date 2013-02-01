@@ -16,13 +16,16 @@
     // * move this in your global bootstrap
     // this is necessary because pages are loaded in front before this application
 
-    $config['observed_models']['nos::model/page'] = array(
+    $config['observed_models']['noviusos_page::model/page'] = array(
         'primary_key' => 'page_id',
         'config_behaviour' => array(
             'fields' => array('page_title', 'wysiwyg_content'),
             //'debug' => true,
         ),
     );
+
+    //$config['min_word_len'] = 4;
+    //$config['debug'] = true;
 });
 
 \JayPS\Search\Orm_Behaviour_Searchable::init();
@@ -32,7 +35,7 @@ function d($o, $line_number = 1) {
     if ($line_number > 0) {
         $trace = debug_backtrace();
     }
-    print('<pre style="border:1px solid #FF0000; background-color: #FFCCCC; width:95%; height: auto; overflow: auto">');
+    print('<div style="border:1px solid #FF0000; background-color: #FFCCCC; width:95%; height: auto; overflow: auto">');
     $print_line_numbers = count($trace) > 1 && $line_number > 1;
     for($i = 0; $i < count($trace) && $i < $line_number; $i++) {
         print('<div style="color:#FF0000; font-weight:bold;">');
@@ -46,13 +49,15 @@ function d($o, $line_number = 1) {
         }
         print('</div>');
     }
+    print('<xmp>');
     print_r($o);
-    print('</pre>');
+    print('</xmp>');
+    print('</div>');
 }
 
 function show_last_query() {
     $sql = str_replace('`', '', \DB::last_query());
     $sql = preg_replace('/(FROM|LEFT|WHERE|GROUP|ORDER|LIMIT)/', "\n $1", $sql);
-    $sql = preg_replace('/([A-Z]+)/', "<b>$1</b>", $sql);
-    d($sql);
+    //$sql = preg_replace('/([A-Z]+)/', "<b>$1</b>", $sql);
+    d(($sql));
 }
