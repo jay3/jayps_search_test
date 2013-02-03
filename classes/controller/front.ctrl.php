@@ -8,11 +8,20 @@ class Controller_Front extends Controller_Front_Application
 {
     public function action_test($args = array())
     {
-        $keywords =  !empty($_GET['q']) ? $_GET['q'] : 'monkey chimpa*';
+        $q =  !empty($_GET['q']) ? $_GET['q'] : 'monkey chimpa*';
 
         echo \View::forge('front/form', array(
-            'q' => $keywords,
+            'q' => $q,
         ));
+
+        \Config::load('jayps_search::config', 'config');
+        $config = \Config::get('config');
+
+        $keywords = \JayPS\Search\Search::generate_keywords($q, array(
+            'min_word_len' => $config['min_word_len'],
+            'max_keywords' => $config['max_join'],
+        ));
+        d($keywords);
 
         \JayPS\Search\Orm_Behaviour_Searchable::init_relations();
 
@@ -23,7 +32,7 @@ class Controller_Front extends Controller_Front_Application
 
         $pages = \Nos\Page\Model_Page::find('all', array(
             'where' => array(
-                array('keywords', $keywords),
+                array('keywords', $q),
             ),
             'rows_limit' => 10,
             'order_by' => array('jayps_search_score', 'page_title'),
@@ -37,7 +46,7 @@ class Controller_Front extends Controller_Front_Application
 
         $monkeys = \Nos\Monkey\Model_Monkey::find('all', array(
             'where' => array(
-                array('keywords', $keywords),
+                array('keywords', $q),
             ),
             'rows_limit' => 10,
             /*'order_by' => array(
