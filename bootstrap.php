@@ -29,7 +29,12 @@
 });
 
 \JayPS\Search\Orm_Behaviour_Searchable::init();
+\Event::register_function('front.start', function() {
+    // add models you want to use in your search and that are used in your template before your search enhancer
+    // for exemple: noviusos_page::model/page
 
+    \JayPS\Search\Orm_Behaviour_Searchable::init_relations('noviusos_page::model/page');
+});
 
 function d($o, $line_number = 1) {
     if ($line_number > 0) {

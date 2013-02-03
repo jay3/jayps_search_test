@@ -14,6 +14,13 @@ class Controller_Front extends Controller_Front_Application
             'q' => $keywords,
         ));
 
+        \JayPS\Search\Orm_Behaviour_Searchable::init_relations();
+
+        // note: we could add relations to a specific model
+        // but for every model used before the controller (ex: noviusos_page::model/page in the template),
+        // init_relations() should be call in 'front.start'
+        //\JayPS\Search\Orm_Behaviour_Searchable::init_relations('noviusos_monkey::model/monkey');
+
         $pages = \Nos\Page\Model_Page::find('all', array(
             'where' => array(
                 array('keywords', $keywords),
