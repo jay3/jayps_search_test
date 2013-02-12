@@ -24,16 +24,26 @@
         ),
     );
 
+    $config['observed_models']['noviusos_news::model/post'] = array(
+        'primary_key' => 'post_id',
+        'config_behaviour' => array(
+            'fields' => array('post_title', 'wysiwyg_content'),
+        ),
+    );
+
     //$config['min_word_len'] = 4;
-    //$config['debug'] = true;
+    $config['debug'] = true;
 });
 
 \JayPS\Search\Orm_Behaviour_Searchable::init();
 \Event::register_function('front.start', function() {
     // add models you want to use in your search and that are used in your template before your search enhancer
-    // for exemple: noviusos_page::model/page
+    // for example: noviusos_page::model/page
 
-    \JayPS\Search\Orm_Behaviour_Searchable::init_relations('noviusos_page::model/page');
+    //\JayPS\Search\Orm_Behaviour_Searchable::init_relations('noviusos_page::model/page');
+    //\JayPS\Search\Orm_Behaviour_Searchable::init_relations('noviusos_news::model/post');
+
+    \JayPS\Search\Orm_Behaviour_Searchable::init_relations();
 });
 
 function d($o, $line_number = 1) {

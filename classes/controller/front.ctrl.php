@@ -33,33 +33,37 @@ class Controller_Front extends Controller_Front_Application
         $pages = \Nos\Page\Model_Page::find('all', array(
             'where' => array(
                 array('keywords', $q),
+                'page_published' => 1,
+                'page_context'   => \Nos\Nos::main_controller()->getPage()->page_context,
             ),
             'rows_limit' => 10,
             'order_by' => array('jayps_search_score', 'page_title'),
         ));
-        echo \View::forge('front/results', array(
-            'title'        => '\Nos\Page\Model_Page::find()',
-            'items'        => $pages,
-            'field_name'   => 'page_title',
-            'field_url'    => 'page_virtual_url',
-         ));
+
+        $news = \Nos\BlogNews\News\Model_Post::find('all', array(
+            'where' => array(
+                array('keywords', $keywords),
+                'post_published' => 1,
+                'post_context'   => \Nos\Nos::main_controller()->getPage()->page_context,
+            ),
+            'rows_limit' => 10,
+            'order_by'   => array('jayps_search_score', 'post_title'),
+        ));
 
         $monkeys = \Nos\Monkey\Model_Monkey::find('all', array(
             'where' => array(
                 array('keywords', $q),
+                'monk_published' => 1,
+                'monk_context'   => \Nos\Nos::main_controller()->getPage()->page_context,
             ),
             'rows_limit' => 10,
-            /*'order_by' => array(
-                array('jayps_search_score'),
-                array('monk_name', 'asc')
-            ),*/
             'order_by' => array('jayps_search_score', 'monk_name'),
         ));
-        echo \View::forge('front/results', array(
-            'title'        => '\Nos\Monkey\Model_Monkey::find()',
-            'items'        => $monkeys,
-            'field_name'   => 'monk_name',
-            'url_enhancer' => true,
-        ));
+
+        return \View::forge('front/main', array(
+            'pages'     	=> $pages,
+            'news'   		=> $news,
+            'monkeys'       => $monkeys,
+        ), false);
     }
 }
