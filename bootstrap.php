@@ -19,7 +19,7 @@
     $config['observed_models']['noviusos_page::model/page'] = array(
         'primary_key' => 'page_id',
         'config_behaviour' => array(
-            'fields' => array('page_title', 'wysiwyg_content'),
+            'fields' => array('page_title', 'wysiwyg_content', 'page_meta_title', 'page_meta_description', 'page_meta_keywords'),
             //'debug' => true,
         ),
     );
