@@ -46,13 +46,14 @@
     \JayPS\Search\Orm_Behaviour_Searchable::init_relations();
 });
 
-function d($o, $line_number = 1) {
+function d($o, $line_number = 1)
+{
     if ($line_number > 0) {
         $trace = debug_backtrace();
     }
     print('<div style="border:1px solid #FF0000; background-color: #FFCCCC; width:95%; height: auto; overflow: auto">');
     $print_line_numbers = count($trace) > 1 && $line_number > 1;
-    for($i = 0; $i < count($trace) && $i < $line_number; $i++) {
+    for ($i = 0; $i < count($trace) && $i < $line_number; $i++) {
         print('<div style="color:#FF0000; font-weight:bold;">');
         if ($print_line_numbers) {
             print(($i+1).': ');
@@ -70,7 +71,8 @@ function d($o, $line_number = 1) {
     print('</div>');
 }
 
-function show_last_query() {
+function show_last_query()
+{
     $sql = str_replace('`', '', \DB::last_query());
     $sql = preg_replace('/(FROM|LEFT|WHERE|GROUP|ORDER|LIMIT)/', "\n $1", $sql);
     //$sql = preg_replace('/([A-Z]+)/', "<b>$1</b>", $sql);

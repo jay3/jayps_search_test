@@ -7,7 +7,7 @@ show_last_query();
 
 if (count($items)) {
     print('<ul>');
-    foreach($items as $item) {
+    foreach ($items as $item) {
         print('<li>');
         if (!empty($url_enhancer) || !empty($field_url)) {
             $url = '';
