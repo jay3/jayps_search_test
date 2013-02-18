@@ -14,8 +14,7 @@ class Controller_Front extends Controller_Front_Application
             'q' => $q,
         ));
 
-        \Config::load('jayps_search::config', 'config');
-        $config = \Config::get('config');
+        $config = \Config::load('jayps_search::config', true);
 
         $keywords = \JayPS\Search\Search::generate_keywords($q, array(
             'min_word_len' => $config['min_word_len'],
